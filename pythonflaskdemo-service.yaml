@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pythonflaskdemo
+  name: pythonflaskdemo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pythonflaskdemo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pythonflaskdemo
+    spec:
+      containers:
+      - image: sharsora1985/pythonflaskdemo
+        name: pythonflaskdemo
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+  labels:
+    app: lb-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector:
+    app: pythonflaskdemo
